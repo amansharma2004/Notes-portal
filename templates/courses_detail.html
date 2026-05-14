@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ course.title }} - Course Details</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header>
+  <nav class="navbar">
+    <div class="logo">Semester Notes Hub</div>
+    <ul class="nav-links">
+      <li><a href="{% url 'home' %}">SUBJECTS</a></li>
+      <li><a href="{% url 'courses_list' %}">COURSES</a></li>
+      <li><a href="{% url 'logout' %}" class="btn ghost small">LOGOUT</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="bg-gradient">
+  <main class="main-layout">
+    <section class="course-detail-section">
+      <div class="login-wrapper glass">
+        <div class="login-header">
+          <h2>{{ course.title }}</h2>
+          {% if course.target_exam %}
+            <p>Useful for: {{ course.target_exam }}</p>
+          {% endif %}
+        </div>
+
+        {% if course.description %}
+          <p class="course-full-desc">{{ course.description|linebreaks }}</p>
+        {% endif %}
+
+        <div class="course-links">
+          {% if course.notes_url %}
+            <a href="{{ course.notes_url }}" target="_blank" class="btn secondary">
+              Open notes
+            </a>
+          {% endif %}
+          {% if course.video_url %}
+            <a href="{{ course.video_url }}" target="_blank" class="btn primary">
+              Watch videos
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

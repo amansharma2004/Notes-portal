@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Courses - Semester Notes Hub</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header>
+  <nav class="navbar">
+    <div class="logo">Semester Notes Hub</div>
+    <ul class="nav-links">
+      <li><a href="{% url 'home' %}">SUBJECTS</a></li>
+      <li><a href="{% url 'courses_list' %}" class="active">COURSES</a></li>
+      <li><a href="{% url 'logout' %}" class="btn ghost small">LOGOUT</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="bg-gradient">
+  <main class="main-layout">
+    <section class="courses-section">
+      <div class="section-header">
+        <h2>Extra Courses & Resources</h2>
+        <p>Video lectures and curated notes beyond regular semester subjects.</p>
+      </div>
+
+      <div class="courses-grid">
+        {% for course in courses %}
+          <article class="course-card">
+            <div class="course-badge">
+              {{ course.difficulty|default:"Course" }}
+            </div>
+            <h3>{{ course.title }}</h3>
+            <p class="course-desc">
+              {{ course.short_description|default:course.description|truncatechars:120 }}
+            </p>
+            <ul class="course-meta">
+              {% if course.target_exam %}
+                <li><span>Useful for:</span> {{ course.target_exam }}</li>
+              {% endif %}
+              {% if course.notes_url %}
+                <li><span>Notes:</span> Available</li>
+              {% endif %}
+              {% if course.video_url %}
+                <li><span>Videos:</span> Available</li>
+              {% endif %}
+            </ul>
+            <a href="{% url 'course_detail' course.slug %}" class="btn mini">
+              View details
+            </a>
+          </article>
+        {% empty %}
+          <p>No courses added yet.</p>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Designed for B.Tech Students • Admin managed courses.</p>
+  </footer>
+</div>
+</body>
+</html>

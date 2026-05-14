@@ -1,0 +1,710 @@
+/* Layout: Lamp + card side-by-side (or stacked on small screens) */
+
+
+.lamp-login-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+/* Stand lamp container */
+.stand-lamp {
+  position: relative;
+  width: 160px;
+  height: 260px;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* Lamp base */
+.lamp-base {
+  width: 120px;
+  height: 20px;
+  background: #020617;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+}
+
+/* Lamp stand */
+.lamp-stand {
+  width: 10px;
+  height: 150px;
+  background: linear-gradient(to bottom, #111827, #020617);
+}
+
+/* Lamp shade */
+.lamp-shade {
+  width: 120px;
+  height: 70px;
+  background: #020617;
+  margin-bottom: 10px;
+  border-radius: 30px 30px 10px 10px;
+  clip-path: polygon(18% 0, 82% 0, 100% 100%, 0 100%);
+  position: relative;
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.9),
+    0 0 25px rgba(15, 23, 42, 0.9);
+}
+
+/* Pull cord wrapper */
+.lamp-cord-wrapper {
+  position: absolute;
+  top: 60px;             /* shade ke niche */
+  right: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Cord line */
+.lamp-cord-line {
+  width: 2px;
+  height: 70px;
+  background: #e5e7eb;
+  transition: height 0.2s ease;
+}
+/* Jab lamp on ho (cord pull ke baad) */
+.stand-lamp.on .lamp-shade,
+.stand-lamp.on .lamp-stand,
+.stand-lamp.on .lamp-base {
+  background: #facc15;  /* warm yellow */
+  box-shadow:
+    0 0 25px rgba(250, 204, 21, 0.9),
+    0 0 60px rgba(250, 204, 21, 0.8),
+    0 0 120px rgba(250, 204, 21, 0.6);
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Cord ball (jisko pull karne ka feel aayega) */
+.lamp-cord-ball {
+  width: 14px;
+  height: 14px;
+  background: #facc15;
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.8);
+  transition: transform 0.2s ease;
+}
+
+/* Pull animation (jab lamp pe click hota hai) */
+.stand-lamp.on .lamp-cord-line {
+  height: 90px;
+}
+
+.stand-lamp.on .lamp-cord-ball {
+  transform: translateY(10px);
+}
+
+/* Lamp ON glow */
+.stand-lamp.on .lamp-shade {
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.95),
+    0 0 40px rgba(250, 204, 21, 0.8);
+}
+
+/* Glass login card (reusing tumhara glass style) */
+
+.glass-card {
+  background: rgba(15, 23, 42, 0.55);
+  border-radius: 24px;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.7),
+    0 -14px 32px rgba(250, 204, 21, 0.25); /* lamp glow */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 2rem 2.4rem;
+  max-width: 420px;
+  width: 100%;
+  color: #e5e7eb;
+  opacity: 0;
+  transform: translateY(18px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Form visible state (after cord pull) */
+.glass-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Inputs glass look (optional override) */
+.auth-form input[type="text"],
+.auth-form input[type="password"],
+.auth-form input[type="email"] {
+  width: 100%;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  background: rgba(15, 23, 42, 0.5);
+  color: #e5e7eb;
+  font-size: 0.85rem;
+  outline: none;
+  backdrop-filter: blur(6px);
+}
+
+.auth-form input::placeholder {
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.auth-form input:focus {
+  border-color: #fbbf24;
+  box-shadow: 0 0 18px rgba(251, 191, 36, 0.75);
+  background: rgba(15, 23, 42, 0.8);
+}
+
+/* Basic form-row layout (agar pehle se nahi hai) */
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+
+.form-row > label {
+  width: 110px;
+  font-size: 0.8rem;
+  color: #cbd5f5;
+}
+
+.form-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field .errorlist {
+  margin-top: 0.2rem;
+  padding-left: 0;
+  list-style: none;
+  font-size: 0.75rem;
+  color: #f97373;
+}
+
+/* Responsive tweak: mobile pe center karo */
+@media (max-width: 768px) {
+  .lamp-login-layout {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+
+
+
+
+/* THEME VARIABLES */
+
+/* Default: light */
+/* :root {
+  --bg-body: #232c60;
+  --text-main: #0f1931;
+}
+  /* Lamp + card wrapper */
+
+/* Dark theme */
+:root[data-theme="dark"] {
+  --bg-body: #0b1029;
+  --text-main: #0c1934;
+} */
+/********************************************************
+ * 0. GLOBAL RESET + BASE TYPOGRAPHY
+ ********************************************************/
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #2a3770;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--bg-body);
+  color: var(--text-main);
+}
+
+
+/********************************************************
+ * 1. GLOBAL BACKGROUND / LAYOUT WRAPPERS
+ ********************************************************/
+
+/* Background theme + image (global) */
+.bg-gradient {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #556aca;
+  background-image:
+    linear-gradient(135deg, rgba(15,23,42,0.9), rgba(120, 138, 199, 0.85)),
+    url('../images/bgimg.avif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Main application layout wrapper */
+.main-layout {
+  display: block; /* earlier grid; now simple block */
+  padding: 1.4rem 1.5rem 1.6rem;
+}
+
+/* Section header (page-level heading + actions) */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color:white;
+}
+
+
+/********************************************************
+ * 2. NAVBAR + LANDING PAGE (HERO) STYLES
+ ********************************************************/
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 3rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4rem 3rem;
+}
+
+.hero-text {
+  max-width: 50%;
+}
+
+.hero-text h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero-text p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Generic primary / secondary buttons (also reused on cards) */
+.btn {
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn.primary {
+  background: #ffca28;
+  color: #000;
+}
+
+.btn.secondary {
+  background: transparent;
+  border: 2px solid #d4cfcf;
+  color: #e6d4d4;
+}
+
+/* Hero image */
+.hero-image img {
+  max-width: 400px;
+}
+
+/* Small pill-style button for cards */
+.btn.mini {
+  padding: 0.25rem 0.7rem;
+  font-size: 0.7rem;
+  border-radius: 999px;
+  color: black;
+}
+
+
+/********************************************************
+ * 3. AUTH / LOGIN PAGE (GLASSMORPHISM CARD)
+ ********************************************************/
+
+/* Auth page background (if specific) */
+.bg-gradient.auth {
+  min-height: 100vh;
+  background-image:
+    linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,64,175,0.85)),
+    url('../images/bgimg.avif');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* Main login / auth wrapper (glass card) */
+.login-wrapper.glass {
+  max-width: 480px;
+  margin: 4rem auto;
+  padding: 2rem 2.2rem;
+  border-radius: 24px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(60px);
+  -webkit-backdrop-filter: blur(60px);
+  color: #e5e7eb;
+}
+
+/* Login header text */
+.login-header h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.3rem;
+}
+
+.login-header p {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+/* Auth form layout */
+.auth-form {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Har field ek row: label + input */
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Fixed width labels for alignment */
+.form-row > label {
+  width: 130px;
+  font-size: 0.85rem;
+  color: #cbd5f5;
+}
+
+/* Input + error column */
+.form-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Django form inputs styling */
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"] {
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.75);
+  background: rgba(15, 23, 42, 0.35);
+  color: #e5e7eb;
+  font-size: 0.85rem;
+  outline: none;
+  backdrop-filter:blur(8px);
+}
+
+.auth-form input:focus {
+  border-color: rgba(56, 189, 248, 0.9);
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.6);
+}
+
+/* Error messages under fields */
+.form-field .errorlist {
+  margin-top: 0.2rem;
+  padding-left: 0;
+  list-style: none;
+  font-size: 0.75rem;
+  color: #f97373;
+}
+
+/* Auth page responsive tweaks */
+@media (max-width: 480px) {
+  .form-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .form-row > label {
+    width: auto;
+  }
+
+  .login-wrapper.glass {
+    margin: 2rem 1rem;
+    padding: 1.5rem 1.4rem;
+  }
+}
+
+
+/********************************************************
+ * 4. SUBJECTS PAGE – GRID + SUBJECT CARDS
+ ********************************************************/
+
+/* Base grid hook (if used somewhere else) */
+.subject-grid.dynamic {
+  /* flex removed; only gap kept if needed */
+  gap: 1rem;
+}
+
+/* SUBJECTS GRID: 4 cards per row, responsive */
+.subjects-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)); /* 4 columns per row */
+  gap: 1rem;
+  justify-items: center;  /* center cards in each column */
+  margin-top: 0.9rem;
+}
+
+/* Subjects ke cards ka width control */
+.subjects-grid .subject-card.dynamic {
+  width: 100%;
+  max-width: 260px;
+}
+
+/* Responsive: tablet */
+@media (max-width: 992px) {
+  .subjects-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Responsive: mobile */
+@media (max-width: 576px) {
+  .subjects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/********************************************************
+ * 5. UNITS PAGE – UNITS GRID + CARD WIDTH
+ ********************************************************/
+
+.user-label {
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Units page: cards in a row, centered vertically */
+.units-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Units ke cards ka size */
+.units-grid .subject-card.dynamic {
+  width: 500px;
+  max-width: 100%;
+}
+
+
+/********************************************************
+ * 6. SUBJECT/UNIT CARD DESIGN (SHARED)
+ ********************************************************/
+
+/* Base card design (subject + unit) */
+.subject-card.dynamic {
+  color: #000;
+  position: relative;
+  overflow: hidden;
+  padding: 1rem;
+  border-radius: 18px;
+  background: radial-gradient(circle at top left, rgba(232, 236, 235, 0.25), rgba(230, 235, 232, 0.788));
+  border: 1px solid rgba(230, 235, 232, 0.788);
+  box-shadow: 0 18px 35px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease,
+              border-color 0.18s ease, background 0.18s ease;
+  backdrop-filter: blur(18px);
+}
+
+/* Hover effect on subject/unit card */
+.subject-card.dynamic:hover {
+  transform: translateY(-6px) scale(1.01);
+  border-color: rgba(235, 240, 238, 0.8);
+  box-shadow: 0 24px 45px rgba(0,0,0,0.7);
+  background: radial-gradient(circle at top right, rgb(234, 239, 239), rgba(0,0,0,0.85));
+}
+
+/* Gradient blobs */
+.subject-bg-shape {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(231, 233, 234, 0.35), transparent 60%);
+  top: -40px;
+  right: -40px;
+  opacity: 0.8;
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+.subject-bg-shape.second {
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(225, 228, 227, 0.45), transparent 60%);
+  bottom: -30px;
+  left: -30px;
+  opacity: 0.7;
+}
+
+/* Card internal layout */
+.subject-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Icon container on card */
+.subject-icon-circle {
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  background: rgba(0,0,0,0.65);
+  border: 1px solid rgba(255,255,255,0.38);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subject-icon-lg {
+  font-size: 1.6rem;
+}
+
+/* Small chip/badge */
+.subject-chip {
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.5);
+  font-size: 0.7rem;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+}
+
+.subject-body {
+  position: relative;
+  z-index: 1;
+}
+
+.subject-body h3 {
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+  color: #000;
+}
+
+.subject-body p {
+  font-size: 0.76rem;
+  opacity: 0.9;
+  color: #000;
+}
+
+.subject-footer {
+  position: relative;
+  z-index: 1;
+  margin-top: 0.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  opacity: 0.95;
+  color: #000;
+}
+
+/* Notes row text inside units */
+.unit-note-row .note-title {
+  color: #000;
+}
+
+
+/********************************************************
+ * 7. FILTER BAR / DROPDOWNS (LISTING PAGES)
+ ********************************************************/
+
+.filter-bar.glass {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0 0 1rem 0;
+  padding: 0.8rem 1rem;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(14px);
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 160px;
+}
+
+.filter-group label {
+  font-size: 0.8rem;
+  opacity: 0.85;
+  color: #e5e7eb;
+}
+
+.filter-select {
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.8);
+  background: rgba(15, 23, 42, 0.9);
+  color: #e5e7eb;
+  font-size: 0.82rem;
+  outline: none;
+  min-width: 140px;
+}
+
+.filter-select:focus {
+  border-color: rgba(56, 189, 248, 0.9);
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.8);
+}

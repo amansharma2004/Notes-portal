@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<div class="dashboard">
+    <h1>Hello, {{ request.user.username }}</h1>
+    <p>Semester: {{ profile.semester|default:"N/A" }}, Roll No: {{ profile.roll_no|default:"N/A" }}</p>
+    <a href="{% url 'home' %}">Go to Notes Page</a> |
+    <a href="{% url 'logout' %}">Logout</a>
+
+    <h2>All Notes</h2>
+    <ul>
+        {% for note in notes %}
+        <li>{{ note.get_subject_display }} - {{ note.title }} - 
+            <a href="/media/{{ note.file }}" download>Download</a>
+        </li>
+        {% empty %}
+        <li>No notes yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>

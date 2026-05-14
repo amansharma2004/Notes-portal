@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - 8th Sem Notes</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<div class="bg-gradient">
+    <div class="login-wrapper glass">
+        <div class="login-header">
+            <h2>Create your account ✨</h2>
+            <p>Register as a student to access all subjects Notes.</p>
+        </div>
+
+        {% if msg %}
+            <p class="error">{{ msg }}</p>
+        {% endif %}
+
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div class="form-row">
+                <label for="{{ form.username.id_for_label }}">Username</label>
+                <div class="form-field">
+                    {{ form.username }}
+                    {{ form.username.errors }}
+                </div>
+            </div>
+       
+
+            <div class="form-row">
+                <label for="{{ form.email.id_for_label }}">Email</label>
+                <div class="form-field">
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="{{ form.password.id_for_label }}">Password</label>
+                <div class="form-field">
+                    {{ form.password }}
+                    {{ form.password.errors }}
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="{{ form.confirm_password.id_for_label }}">Confirm Password</label>
+                <div class="form-field">
+                    {{ form.confirm_password }}
+                    {{ form.confirm_password.errors }}
+                </div>
+            </div>
+
+            <button type="submit" class="btn secondary full">Register & Continue</button>
+        </form>
+
+        <p class="register-link">
+            Already have an account? <a href="{% url 'login' %}">Login here</a>
+        </p>
+    </div>
+</div>
+</body>
+</html>

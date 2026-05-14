@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ subject.name }} – Units</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+      <header>
+    <nav class="navbar">
+      <div class="logo"><h3>{{ subject.name }} – Units</h3></div>
+      <ul class="nav-links">
+        
+        <a href="{% url 'home' %}" class="btn ghost small">← Back to subjects</a>
+      </ul>
+    </nav>
+  </header>
+<div class="bg-gradient">
+
+    <main class="main-layout">
+        <section class="subject-list glass">
+            <div class="section-header">
+                <div>
+                    <h2>Units</h2>
+                </div>
+            </div>
+
+            <div class="subject-grid dynamic units-grid">
+                {% for unit in units %}
+                    <div class="subject-card dynamic unit-card">
+                        <div class="subject-bg-shape"></div>
+                        <div class="subject-bg-shape second"></div>
+
+                        <div class="subject-top">
+                            <div class="subject-icon-circle">
+                                <span class="subject-icon-lg">
+                                    {{ subject.icon|default:'📘' }}
+                                </span>
+                            </div>
+                            <span class="subject-chip">Semester {{ subject.semester }}</span>
+                        </div>
+
+                        <div class="subject-body">
+                            <h3>Unit {{ forloop.counter }} </h3>
+                            <p class="hint-text">
+                                {{ unit.notes.count }} notes available
+                            </p>
+                        </div>
+
+                        <div class="subject-footer">
+                            <span class="subject-meta">Notes</span>
+                        </div>
+
+                        <div class="unit-notes">
+                            {% for note in unit.notes.all %}
+                                <div class="unit-note-row">
+                                    <span class="note-title">{{ note.title }}</span>
+                                    <a href="{% url 'view_note_pdf' note.id %}"
+                                       class="btn view-btn"
+                                       target="_blank">
+                                        View
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="no-notes">No units added for this subject yet.</p>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+      <p>All Notes are in Hinglish(Hindi+English) Language.</p>
+    </footer>
+</div>
+</body>
+</html>

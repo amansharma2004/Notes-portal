@@ -1,0 +1,27 @@
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+media/
+
+# Envs
+.env
+.env.*
+venv/
+.venv/
+env/
+ENV/
+
+# IDE / Editor
+.vscode/
+.idea/
+
+# Python packaging
+*.egg-info/
+dist/
+build/
+
+# Others
+*.bak
